@@ -1,4 +1,4 @@
-package com.wfbfm.falsespring.forecast.modelled;
+package com.wfbfm.falsespring.forecast.repository;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.wfbfm.falsespring.forecast.modelled;
+package com.wfbfm.falsespring.forecast.repository;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;

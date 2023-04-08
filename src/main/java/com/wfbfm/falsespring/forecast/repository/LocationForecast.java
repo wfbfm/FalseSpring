@@ -1,4 +1,4 @@
-package com.wfbfm.falsespring.forecast.modelled;
+package com.wfbfm.falsespring.forecast.repository;
 
 import com.wfbfm.falsespring.forecast.input.HourlyReport;
 import com.wfbfm.falsespring.forecast.input.Location;
