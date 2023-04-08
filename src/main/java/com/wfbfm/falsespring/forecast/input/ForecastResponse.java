@@ -1,4 +1,4 @@
-package com.wfbfm.weatherhindsight.forecast;
+package com.wfbfm.falsespring.forecast.input;
 
 import java.util.List;
 

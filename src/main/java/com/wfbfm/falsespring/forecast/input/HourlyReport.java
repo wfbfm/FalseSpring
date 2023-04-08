@@ -1,7 +1,13 @@
-package com.wfbfm.weatherhindsight.forecast;
+package com.wfbfm.falsespring.forecast.input;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class HourlyReport
 {
+    private @Id @GeneratedValue long id;
     private String enhancedWeatherDescription;
     private int gustSpeedKph;
     private String feelsLikeTemperatureC;
@@ -23,6 +29,8 @@ public class HourlyReport
     private String windDirectionFull;
     private int windSpeedKph;
     private int windSpeedMph;
+
+    private HourlyReport(){};
 
     public HourlyReport(String enhancedWeatherDescription, int gustSpeedKph, String feelsLikeTemperatureC, String feelsLikeTemperatureF, int humidity, String localDate, int precipitationProbabilityInPercent, String precipitationProbabilityText, int pressure, int temperatureC, int temperatureF, String timeslot, int timeslotLength, String visibility, String weatherTypeText, String windDescription, String windDirection, String windDirectionAbbreviation, String windDirectionFull, int windSpeedKph, int windSpeedMph)
     {
@@ -257,5 +265,15 @@ public class HourlyReport
     public void setWindSpeedMph(int windSpeedMph)
     {
         this.windSpeedMph = windSpeedMph;
+    }
+
+    public long getId()
+    {
+        return id;
+    }
+
+    public void setId(long id)
+    {
+        this.id = id;
     }
 }

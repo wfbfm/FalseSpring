@@ -1,7 +1,7 @@
 {
-  "name": "coin-idle",
+  "name": "false-spring",
   "version": "0.1.0",
-  "description": "Crypto Idle Game",
+  "description": "False Spring App",
   "dependencies": {
     "react": "^16.5.2",
     "react-dom": "^16.5.2",

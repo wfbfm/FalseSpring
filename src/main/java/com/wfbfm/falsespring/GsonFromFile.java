@@ -1,8 +1,8 @@
-package com.wfbfm.weatherhindsight;
+package com.wfbfm.falsespring;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import com.wfbfm.weatherhindsight.forecast.ForecastResponse;
+import com.wfbfm.falsespring.forecast.input.ForecastResponse;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
