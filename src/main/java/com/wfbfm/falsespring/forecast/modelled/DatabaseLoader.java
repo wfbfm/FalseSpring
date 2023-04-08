@@ -2,21 +2,21 @@ package com.wfbfm.falsespring.forecast.modelled;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import com.wfbfm.falsespring.forecast.input.Forecast;
-import com.wfbfm.falsespring.forecast.input.ForecastResponse;
+import com.wfbfm.falsespring.forecast.input.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.io.FileReader;
+import java.util.List;
 
 @Component
 public class DatabaseLoader implements CommandLineRunner
 {
-    private final ForecastRepository repository;
+    private final LocationForecastRepository repository;
 
     @Autowired
-    public DatabaseLoader(ForecastRepository repository)
+    public DatabaseLoader(LocationForecastRepository repository)
     {
         this.repository = repository;
     }
@@ -30,7 +30,12 @@ public class DatabaseLoader implements CommandLineRunner
         ForecastResponse forecasts = gson.fromJson(jsonReader, ForecastResponse.class);
 
         Forecast forecast = forecasts.getForecasts().get(0);
+        List<HourlyReport> hourlyReportList = forecast.getDailyReport().getHourlyReports();
+        Location location = Location.LIMEHOUSE;
 
-        repository.save(forecast.getDailyReport());
+        for (HourlyReport hourlyReport : hourlyReportList)
+        {
+            repository.save(new LocationForecast(location, hourlyReport));
+        }
     }
 }

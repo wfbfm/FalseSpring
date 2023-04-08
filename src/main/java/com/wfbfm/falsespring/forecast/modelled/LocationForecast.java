@@ -1,7 +1,26 @@
-package com.wfbfm.falsespring.forecast.input;
+package com.wfbfm.falsespring.forecast.modelled;
 
-public class HourlyReport
+import com.wfbfm.falsespring.forecast.input.HourlyReport;
+import com.wfbfm.falsespring.forecast.input.Location;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.util.Date;
+
+@Entity
+@EntityListeners(AuditingEntityListener.class)
+public class LocationForecast
 {
+    @Id @GeneratedValue
+    private long id;
+    @CreatedDate
+    private Date accessedDate;
+    private String locationId;
+    private String locationName;
     private String enhancedWeatherDescription;
     private int gustSpeedKph;
     private String feelsLikeTemperatureC;
@@ -24,29 +43,73 @@ public class HourlyReport
     private int windSpeedKph;
     private int windSpeedMph;
 
-    public HourlyReport(String enhancedWeatherDescription, int gustSpeedKph, String feelsLikeTemperatureC, String feelsLikeTemperatureF, int humidity, String localDate, int precipitationProbabilityInPercent, String precipitationProbabilityText, int pressure, int temperatureC, int temperatureF, String timeslot, int timeslotLength, String visibility, String weatherTypeText, String windDescription, String windDirection, String windDirectionAbbreviation, String windDirectionFull, int windSpeedKph, int windSpeedMph)
+    private LocationForecast(){};
+
+    public LocationForecast(final Location location, final HourlyReport hourlyReport)
     {
-        this.enhancedWeatherDescription = enhancedWeatherDescription;
-        this.gustSpeedKph = gustSpeedKph;
-        this.feelsLikeTemperatureC = feelsLikeTemperatureC;
-        this.feelsLikeTemperatureF = feelsLikeTemperatureF;
-        this.humidity = humidity;
-        this.localDate = localDate;
-        this.precipitationProbabilityInPercent = precipitationProbabilityInPercent;
-        this.precipitationProbabilityText = precipitationProbabilityText;
-        this.pressure = pressure;
-        this.temperatureC = temperatureC;
-        this.temperatureF = temperatureF;
-        this.timeslot = timeslot;
-        this.timeslotLength = timeslotLength;
-        this.visibility = visibility;
-        this.weatherTypeText = weatherTypeText;
-        this.windDescription = windDescription;
-        this.windDirection = windDirection;
-        this.windDirectionAbbreviation = windDirectionAbbreviation;
-        this.windDirectionFull = windDirectionFull;
-        this.windSpeedKph = windSpeedKph;
-        this.windSpeedMph = windSpeedMph;
+        this.locationId = location.getId();
+        this.locationName = location.getName();
+        this.localDate = hourlyReport.getLocalDate();
+        this.timeslot = hourlyReport.getTimeslot();
+        this.enhancedWeatherDescription = hourlyReport.getEnhancedWeatherDescription();
+        this.gustSpeedKph = hourlyReport.getGustSpeedKph();
+        this.feelsLikeTemperatureC = hourlyReport.getFeelsLikeTemperatureC();
+        this.feelsLikeTemperatureF = hourlyReport.getFeelsLikeTemperatureF();
+        this.humidity = hourlyReport.getHumidity();
+        this.precipitationProbabilityInPercent = hourlyReport.getPrecipitationProbabilityInPercent();
+        this.precipitationProbabilityText = hourlyReport.getPrecipitationProbabilityText();
+        this.pressure = hourlyReport.getPressure();
+        this.temperatureC = hourlyReport.getTemperatureC();
+        this.temperatureF = hourlyReport.getTemperatureF();
+        this.timeslotLength = hourlyReport.getTimeslotLength();
+        this.visibility = hourlyReport.getVisibility();
+        this.weatherTypeText = hourlyReport.getWeatherTypeText();
+        this.windDescription = hourlyReport.getWindDescription();
+        this.windDirection = hourlyReport.getWindDirection();
+        this.windDirectionAbbreviation = hourlyReport.getWindDirectionAbbreviation();
+        this.windDirectionFull = hourlyReport.getWindDirectionFull();
+        this.windSpeedKph = hourlyReport.getWindSpeedKph();
+        this.windSpeedMph = hourlyReport.getWindSpeedMph();
+    }
+
+    public long getId()
+    {
+        return id;
+    }
+
+    public void setId(long id)
+    {
+        this.id = id;
+    }
+
+    public Date getAccessedDate()
+    {
+        return accessedDate;
+    }
+
+    public void setAccessedDate(Date accessedDate)
+    {
+        this.accessedDate = accessedDate;
+    }
+
+    public String getLocationId()
+    {
+        return locationId;
+    }
+
+    public void setLocationId(String locationId)
+    {
+        this.locationId = locationId;
+    }
+
+    public String getLocationName()
+    {
+        return locationName;
+    }
+
+    public void setLocationName(String locationName)
+    {
+        this.locationName = locationName;
     }
 
     public String getEnhancedWeatherDescription()

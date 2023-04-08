@@ -2,20 +2,14 @@ package com.wfbfm.falsespring.forecast.input;
 
 import com.google.gson.annotations.SerializedName;
 
-import javax.persistence.*;
 import java.util.List;
 
-@Entity
 public class DailyReport
 {
-    private @Id @GeneratedValue long id;
     private String issueDate;
     private String lastUpdated;
     @SerializedName(value = "reports")
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HourlyReport> hourlyReports;
-
-    private DailyReport(){};
 
     public DailyReport(String issueDate, String lastUpdated, List<HourlyReport> hourlyReports)
     {
@@ -52,15 +46,5 @@ public class DailyReport
     public void setHourlyReports(List<HourlyReport> hourlyReports)
     {
         this.hourlyReports = hourlyReports;
-    }
-
-    public long getId()
-    {
-        return id;
-    }
-
-    public void setId(long id)
-    {
-        this.id = id;
     }
 }
