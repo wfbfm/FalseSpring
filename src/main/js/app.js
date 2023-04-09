@@ -31,7 +31,7 @@ class App extends React.Component { // <1>
 // tag::locationForecast-list[]
 class LocationForecastList extends React.Component{
 	render() {
-		const employees = this.props.locationForecasts.map(locationForecast =>
+		const locationForecasts = this.props.locationForecasts.map(locationForecast =>
 			<LocationForecast key={locationForecast._links.self.href} locationForecast={locationForecast}/>
 		);
 		return (
@@ -58,7 +58,7 @@ class LocationForecast extends React.Component{
 			<tr>
 				<td>{this.props.locationForecast.locationName}</td>
 				<td>{this.props.locationForecast.localDate}</td>
-				<td>{this.props.locationForecast.timeSlot}</td>
+				<td>{this.props.locationForecast.timeslot}</td>
 				<td>{this.props.locationForecast.temperatureC}</td>
 			</tr>
 		)
