@@ -8,4 +8,6 @@ import java.util.List;
 public interface LocationForecastRepository extends CrudRepository<LocationForecast, Long>
 {
     List<LocationForecast> findByLocationId(@Param("locationId") String locationId);
+
+    List<LocationForecast> findByLocationIdAndLocalDate(@Param("locationId") String locationId, @Param("localDate") String localDate);
 }
