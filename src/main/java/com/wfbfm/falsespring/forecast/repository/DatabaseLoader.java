@@ -35,7 +35,7 @@ public class DatabaseLoader implements CommandLineRunner
 
         for (HourlyReport hourlyReport : hourlyReportList)
         {
-            repository.save(new LocationForecast(location, hourlyReport));
+            // repository.save(new LocationForecast(location, hourlyReport));
         }
     }
 }
