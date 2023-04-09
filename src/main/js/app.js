@@ -64,7 +64,7 @@ class LocationForecast extends React.Component{
 		)
 	}
 }
-// end::temperatureC[]
+// end::locationForecast[]
 
 // tag::render[]
 ReactDOM.render(
