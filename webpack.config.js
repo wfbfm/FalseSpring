@@ -2,7 +2,7 @@ var path = require('path');
 
 module.exports = {
     entry: './src/main/js/app.js',
-    devtool: 'sourcemaps',
+    devtool: 'eval-source-map',
     cache: true,
     mode: 'development',
     output: {
@@ -11,6 +11,10 @@ module.exports = {
     },
     module: {
         rules: [
+            {
+              test: /\.css$/,
+              use: ['style-loader', 'css-loader']
+            },
             {
                 test: path.join(__dirname, '.'),
                 exclude: /(node_modules)/,

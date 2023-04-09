@@ -1,74 +1,47 @@
 'use strict';
 
-// tag::vars[]
-const React = require('react'); // <1>
-const ReactDOM = require('react-dom'); // <2>
-const client = require('./client'); // <3>
-// end::vars[]
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
+import { AgGridReact } from 'ag-grid-react';
+import client from './client';
+import 'ag-grid-community/dist/styles/ag-grid.css'; // Core grid CSS, always needed
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css'; // Optional theme CSS
 
-// tag::app[]
-class App extends React.Component { // <1>
+class App extends React.Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {locationForecasts: []};
 	}
 
-	componentDidMount() { // <2>
-		client({method: 'GET', path: '/api/locationForecasts'}).done(response => {
-			this.setState({locationForecasts: response.entity._embedded.locationForecasts});
-		});
-	}
+    componentDidMount() {
+      client({method: 'GET', path: '/api/locationForecasts'})
+        .then(response => {
+          this.setState({locationForecasts: response.entity._embedded.locationForecasts});
+        })
+        .catch(error => {
+          console.error('Error fetching location forecasts:', error);
+        });
+    }
 
-	render() { // <3>
-		return (
-			<LocationForecastList locationForecasts={this.state.locationForecasts}/>
-		)
-	}
-}
-// end::app[]
-
-// tag::locationForecast-list[]
-class LocationForecastList extends React.Component{
 	render() {
-		const locationForecasts = this.props.locationForecasts.map(locationForecast =>
-			<LocationForecast key={locationForecast._links.self.href} locationForecast={locationForecast}/>
+		const rowData = this.state.locationForecasts;
+		const columnDefs = [
+		    { field: 'locationName' },
+		    { field: 'localDate' },
+		    { field: 'timeslot' },
+		    { field: 'temperatureC' }
+		];
+
+		return (
+			<div className="ag-theme-alpine" style={{height: 400, width: 600}}>
+			   <AgGridReact
+				   rowData={rowData}
+				   columnDefs={columnDefs}>
+			   </AgGridReact>
+			</div>
 		);
-		return (
-			<table>
-				<tbody>
-					<tr>
-                        <th>Location Name</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Temperature C</th>
-					</tr>
-					{locationForecasts}
-				</tbody>
-			</table>
-		)
 	}
 }
-// end::locationForecast-list[]
 
-// tag::locationForecast[]
-class LocationForecast extends React.Component{
-	render() {
-		return (
-			<tr>
-				<td>{this.props.locationForecast.locationName}</td>
-				<td>{this.props.locationForecast.localDate}</td>
-				<td>{this.props.locationForecast.timeslot}</td>
-				<td>{this.props.locationForecast.temperatureC}</td>
-			</tr>
-		)
-	}
-}
-// end::locationForecast[]
-
-// tag::render[]
-ReactDOM.render(
-	<App />,
-	document.getElementById('react')
-)
-// end::render[]
+ReactDOM.render(<App />, document.getElementById('react'));

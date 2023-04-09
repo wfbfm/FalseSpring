@@ -22,7 +22,7 @@ import java.util.List;
 public class DatabaseLoader implements CommandLineRunner
 {
     private final LocationForecastRepository repository;
-    private final boolean FETCH_DATA = true;
+    private final boolean FETCH_DATA = false;
 
     @Autowired
     public DatabaseLoader(LocationForecastRepository repository)
