@@ -1,13 +1,13 @@
 import * as React from "react";
 import * as ReactDOMClient from "react-dom/client";
 import { Box, ChakraProvider } from "@chakra-ui/react";
+import Nav from "./navbar";
 
 function App() {
   return (
-    <Box padding={4}>
-      <Box height="40px" bg="tomato" />
-      <Box height="40px" bg="green.300" />
-    </Box>
+  <div>
+  <Nav />
+  </div>
   );
 }
 
