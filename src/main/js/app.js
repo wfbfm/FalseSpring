@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { AgGridReact } from 'ag-grid-react';
 import client from './client';
-import 'ag-grid-community/dist/styles/ag-grid.css'; // Core grid CSS, always needed
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css'; // Optional theme CSS
+import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
+import 'ag-grid-community/styles/ag-theme-alpine.css'; // Optional theme CSS
 
 class App extends React.Component {
 

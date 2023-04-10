@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "description": "False Spring App",
   "dependencies": {
-    "react": "^16.3.0",
-    "react-dom": "^16.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "rest": "^2.0.0",
-    "ag-grid-community": "27.1.0",
-    "ag-grid-react": "27.1.0"
+    "ag-grid-community": "29.2.0",
+    "ag-grid-react": "29.2.0",
+    "react-native-paper": "5.6.0"
   },
   "scripts": {
     "watch": "webpack --watch -d --output ./target/classes/static/built/bundle.js"
