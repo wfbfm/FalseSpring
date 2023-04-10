@@ -1,14 +1,23 @@
-import * as React from 'react';
-import { AppRegistry } from 'react-native';
-import { Provider as PaperProvider } from 'react-native-paper';
-import App from './src/js/app';
+import * as React from "react";
+import * as ReactDOMClient from "react-dom/client";
+import { Box, ChakraProvider } from "@chakra-ui/react";
 
-export default function Main() {
+function App() {
   return (
-    <PaperProvider>
-      <App />
-    </PaperProvider>
+    <Box padding={4}>
+      <Box height="40px" bg="tomato" />
+      <Box height="40px" bg="green.300" />
+    </Box>
   );
 }
 
-AppRegistry.registerComponent(appName, () => Main);
+const rootElement = document.getElementById("root");
+const root = ReactDOMClient.createRoot(rootElement);
+
+root.render(
+  <React.StrictMode>
+    <ChakraProvider>
+      <App />
+    </ChakraProvider>
+  </React.StrictMode>
+);
