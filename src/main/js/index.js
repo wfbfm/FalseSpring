@@ -2,12 +2,18 @@ import * as React from "react";
 import * as ReactDOMClient from "react-dom/client";
 import { Box, ChakraProvider } from "@chakra-ui/react";
 import Nav from "./navbar";
+import Grid from "./grid";
 
 function App() {
   return (
+  <>
   <div>
   <Nav />
   </div>
+  <div>
+  <Grid />
+  </div>
+  </>
   );
 }
 
