@@ -35,7 +35,7 @@ export default class Grid extends React.Component {
 		];
 
 		return (
-			<div className="ag-theme-alpine" style={{height: 400, width: 600}}>
+			<div className="ag-theme-alpine" style={{height: 500, width: 1000}}>
 			   <AgGridReact
 				   rowData={rowData}
 				   columnDefs={columnDefs}>
