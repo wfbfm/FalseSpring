@@ -44,4 +44,16 @@ public class LocationForecastController
     {
         return this.locationForecastRepository.findByLocationIdAndLocalDate(locationId, localDate);
     }
+
+    @GetMapping("/latest/location/{locationId}/date/{localDate}")
+    public List<LocationForecast> getLatestForecastsForLocationAndDate(@PathVariable String locationId, @PathVariable String localDate)
+    {
+        return this.locationForecastRepository.findLatestForecastsForLocationIdAndLocalDate(locationId, localDate);
+    }
+
+    @GetMapping("/historical/location/{locationId}/date/{localDate}")
+    public List<LocationForecast> getHistoricalForecastsForLocationAndDate(@PathVariable String locationId, @PathVariable String localDate)
+    {
+        return this.locationForecastRepository.findHistoricalForecastsForLocationIdAndLocalDate(locationId, localDate);
+    }
 }

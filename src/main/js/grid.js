@@ -14,9 +14,9 @@ export default class Grid extends React.Component {
 	}
 
     componentDidMount() {
-      client({method: 'GET', path: '/api/locationForecasts'})
+      client({method: 'GET', path: '/locationForecasts'})
         .then(response => {
-          this.setState({locationForecasts: response.entity._embedded.locationForecasts});
+          this.setState({locationForecasts: response.entity});
         })
         .catch(error => {
           console.error('Error fetching location forecasts:', error);
@@ -26,7 +26,9 @@ export default class Grid extends React.Component {
 	render() {
 		const rowData = this.state.locationForecasts;
 		const columnDefs = [
-		    { field: 'locationName' },
+          {
+              field: "location.locationName", headerName: 'Location'
+          },
 		    { field: 'localDate' },
 		    { field: 'timeslot' },
 		    { field: 'temperatureC' }
