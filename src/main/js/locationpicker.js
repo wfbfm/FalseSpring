@@ -8,6 +8,7 @@ const LocationPicker = ({onSelect}) => {
 
   const handleSelect = (event) => {
     const location = event.target.value;
+    setSelectLocation(location);
     onSelect(location);
   };
 

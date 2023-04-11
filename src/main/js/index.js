@@ -22,7 +22,6 @@ function App() {
     </div>
       <div>
         <LocationPicker onSelect={handleLocationSelect} />
-        <p>You selected: {selectedLocation}</p>
       </div>
     <div>
     <LocalDatePicker localDate={localDate} setLocalDate={setLocalDate} />
