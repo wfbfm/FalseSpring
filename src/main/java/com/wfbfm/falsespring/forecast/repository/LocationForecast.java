@@ -1,14 +1,10 @@
 package com.wfbfm.falsespring.forecast.repository;
 
 import com.wfbfm.falsespring.forecast.input.HourlyReport;
-import com.wfbfm.falsespring.forecast.input.Location;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -19,8 +15,8 @@ public class LocationForecast
     private long id;
     @CreatedDate
     private Date accessedDate;
-    private String locationId;
-    private String locationName;
+    @OneToOne
+    private Location location;
     private String enhancedWeatherDescription;
     private int gustSpeedKph;
     private String feelsLikeTemperatureC;
@@ -47,8 +43,7 @@ public class LocationForecast
 
     public LocationForecast(final Location location, final HourlyReport hourlyReport)
     {
-        this.locationId = location.getId();
-        this.locationName = location.getName();
+        this.location = location;
         this.localDate = hourlyReport.getLocalDate();
         this.timeslot = hourlyReport.getTimeslot();
         this.enhancedWeatherDescription = hourlyReport.getEnhancedWeatherDescription();
@@ -92,24 +87,14 @@ public class LocationForecast
         this.accessedDate = accessedDate;
     }
 
-    public String getLocationId()
+    public Location getLocation()
     {
-        return locationId;
+        return location;
     }
 
-    public void setLocationId(String locationId)
+    public void setLocation(Location location)
     {
-        this.locationId = locationId;
-    }
-
-    public String getLocationName()
-    {
-        return locationName;
-    }
-
-    public void setLocationName(String locationName)
-    {
-        this.locationName = locationName;
+        this.location = location;
     }
 
     public String getEnhancedWeatherDescription()

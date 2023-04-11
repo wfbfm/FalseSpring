@@ -1,6 +1,6 @@
 package com.wfbfm.falsespring.forecast.input;
 
-public enum Location
+public enum LocationsToQuery
 {
     LONDON("2643743", "London", 51.5085, -0.1257),
     CAMBRIDGE("2653941", "Cambridge", 52.2, 0.1167),
@@ -15,7 +15,7 @@ public enum Location
     private final double latitude;
     private final double longitude;
 
-    Location(String id, String name, double latitude, double longitude)
+    LocationsToQuery(String id, String name, double latitude, double longitude)
     {
         this.id = id;
         this.name = name;

@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 import com.wfbfm.falsespring.forecast.input.Forecast;
 import com.wfbfm.falsespring.forecast.input.ForecastResponse;
 import com.wfbfm.falsespring.forecast.input.HourlyReport;
-import com.wfbfm.falsespring.forecast.input.Location;
+import com.wfbfm.falsespring.forecast.input.LocationsToQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -21,23 +21,35 @@ import java.util.List;
 @Component
 public class DatabaseLoader implements CommandLineRunner
 {
-    private final LocationForecastRepository repository;
+    private final LocationForecastRepository locationForecastRespository;
+    private final LocationRepository locationRepository;
     private final boolean FETCH_DATA = false;
 
     @Autowired
-    public DatabaseLoader(LocationForecastRepository repository)
+    public DatabaseLoader(LocationForecastRepository locationForecastRespository, LocationRepository locationRepository)
     {
-        this.repository = repository;
+        this.locationForecastRespository = locationForecastRespository;
+        this.locationRepository = locationRepository;
     }
 
     @Override
     public void run(String... strings) throws Exception
     {
+        // populate Location ref data first
+        for (LocationsToQuery locationsToQuery : LocationsToQuery.values())
+        {
+            if (!locationRepository.existsById(locationsToQuery.getId()))
+            {
+                locationRepository.save(new Location(locationsToQuery));
+            }
+        }
         if (FETCH_DATA)
         {
-            for (Location location : Location.values())
+            for (LocationsToQuery queryLocation : LocationsToQuery.values())
             {
-                ForecastResponse forecastResponse = getForecastResponseForLocationId(location.getId());
+                final Location location = locationRepository.findById(queryLocation.getId()).orElseThrow();
+
+                ForecastResponse forecastResponse = getForecastResponseForLocationId(queryLocation.getId());
                 List<Forecast> forecasts = forecastResponse.getForecasts();
 
                 for (Forecast forecast : forecasts)
@@ -46,7 +58,7 @@ public class DatabaseLoader implements CommandLineRunner
 
                     for (HourlyReport hourlyReport : hourlyReportList)
                     {
-                        repository.save(new LocationForecast(location, hourlyReport));
+                        locationForecastRespository.save(new LocationForecast(location, hourlyReport));
                     }
                 }
             }
