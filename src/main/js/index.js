@@ -3,28 +3,18 @@ import * as ReactDOMClient from "react-dom/client";
 import { Box, ChakraProvider } from "@chakra-ui/react";
 import Nav from "./navbar";
 import Grid from "./grid";
-import LocalDatePicker from "./datepicker";
 import SmallWithLogoLeft from "./footer";
-import LocationPicker from "./locationpicker";
+import ControlPanel from "./controlPanel";
 
 function App() {
 
-  const [localDate, setLocalDate] = React.useState(new Date());
-  const [selectedLocation, setSelectedLocation] = React.useState("");
-
-  const handleLocationSelect = (location) => {
-    setSelectedLocation(location);
-  };
   return (
     <>
       <div>
         <Nav />
       </div>
       <div>
-        <LocationPicker onSelect={handleLocationSelect} />
-      </div>
-      <div>
-        <LocalDatePicker localDate={localDate} setLocalDate={setLocalDate} />
+        <ControlPanel />
       </div>
       <div>
         <Grid />
