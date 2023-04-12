@@ -9,16 +9,24 @@ import { Spacer } from "@chakra-ui/layout";
 
 function App() {
 
+  const [latestLocationForecasts, setLatestLocationForecasts] = React.useState([]);
+  const [historicalLocationForecasts, setHistoricalLocationForecasts] = React.useState([]);
+
+  const fetchForecasts = (latestForecasts, historicalForecasts) => {
+    setLatestLocationForecasts(latestForecasts);
+    setHistoricalLocationForecasts(historicalForecasts);
+  }
+
   return (
     <>
       <Nav />
       <Box py='4'>
-     <HStack>
-      <Box borderWidth='1px' borderRadius='lg' p='4' mx='Auto'>
-        <ControlPanel />
-      </Box>
-      <Spacer></Spacer>
-      </HStack>
+        <HStack>
+          <Box borderWidth='1px' borderRadius='lg' p='4' mx='Auto'>
+            <ControlPanel onFetchForecasts={fetchForecasts}/>
+          </Box>
+          <Spacer></Spacer>
+        </HStack>
       </Box>
       <div>
         <Grid />

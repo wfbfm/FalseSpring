@@ -6,29 +6,36 @@ import {
     HStack
 } from '@chakra-ui/react';
 import LocationPicker from './locationpicker';
-import LocalDatePicker from './datepicker'
 import client from './client';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-const ControlPanel = () => {
-    const [localDate, setLocalDate] = React.useState(new Date());
+const ControlPanel = ({ onFetchForecasts }) => {
+    const [selectedDate, setSelectedDate] = React.useState(new Date());
     const [selectLocation, setSelectLocation] = useState("");
     const [latestLocationForecasts, setLatestLocationForecasts] = useState([]);
     const [historicalLocationForecasts, setHistoricalLocationForecasts] = useState([]);
+    const [basePath, setBasePath] = useState("");
+
+    useEffect(() => {
+        if (basePath !== "") {
+            Promise.all([
+                client({ method: 'GET', path: '/locationForecasts/latest' + basePath }),
+                client({ method: 'GET', path: '/locationForecasts/historical' + basePath })
+            ]).then(responses => {
+                setLatestLocationForecasts(responses[0].entity);
+                setHistoricalLocationForecasts(responses[1].entity);
+                onFetchForecasts(responses[0].entity, responses[1].entity);
+            });
+        }
+    }, [basePath]);
 
     const handleLocationSelect = (location) => {
         setSelectLocation(location);
     };
 
-    const handleDateSelect = (date) => {
-        setLocalDate(date);
-    }
-
     const fetchForecasts = () => {
-        const basePath = '/location/' + selectLocation + '/date/' + localDate.toISOString().slice(0, 10);
-        client({ method: 'GET', path: '/locationForecasts/latest' + basePath })
-            .then(response => { setLatestLocationForecasts(response.entity) });
-        client({ method: 'GET', path: '/locationForecasts/historical' + basePath })
-            .then(response => { setHistoricalLocationForecasts(response.entity) });
+        setBasePath('/location/' + selectLocation + '/date/' + selectedDate.toISOString().slice(0, 10));
     }
 
     return (
@@ -37,7 +44,9 @@ const ControlPanel = () => {
                 <HStack spacing='24px'>
                     <Box><Text fontSize='2xl' as='b'>Forecast Parameters</Text></Box>
                     <Box><LocationPicker onSelect={handleLocationSelect} /></Box>
-                    <Box borderWidth='1px' borderRadius='lg'><LocalDatePicker localDate={localDate} setLocalDate={handleDateSelect} /></Box>
+                    <Box borderWidth='1px' borderRadius='lg'>
+                        <DatePicker selected={selectedDate} onChange={date => setSelectedDate(date)} dateFormat="yyyy-MM-dd" />
+                    </Box>
                     <Box><Button colorScheme='green' variant='solid' onClick={fetchForecasts}>
                         Fetch
                     </Button></Box>
