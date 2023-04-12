@@ -24,7 +24,7 @@ const LocationPicker = ({ onSelect }) => {
       placeholder="Select a location"
     >
       {locations.map(location => (
-        <option key={location.locationName} value={location.locationName}>
+        <option key={location.locationName} value={location._links.self.href.split('/').pop()}>
           {location.locationName}
         </option>
       ))}

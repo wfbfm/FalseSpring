@@ -24,18 +24,11 @@ const ControlPanel = () => {
     }
 
     const fetchForecasts = () => {
-        console.log("button clicked");
-        console.log(location);
-        console.log(localDate);
-        console.log(localDate.toISOString().slice(0, 10));
         const basePath = '/location/' + selectLocation + '/date/' + localDate.toISOString().slice(0, 10);
-        console.log(basePath);
-        client({ method: 'GET', path: '/latest/' + basePath })
+        client({ method: 'GET', path: '/locationForecasts/latest' + basePath })
             .then(response => { setLatestLocationForecasts(response.entity) });
-        console.log(latestLocationForecasts);
-        client({ method: 'GET', path: '/historical/' + basePath })
+        client({ method: 'GET', path: '/locationForecasts/historical' + basePath })
             .then(response => { setHistoricalLocationForecasts(response.entity) });
-        console.log(historicalLocationForecasts);
     }
 
     return (
