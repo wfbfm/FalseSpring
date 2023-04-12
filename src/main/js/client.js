@@ -1,14 +1,14 @@
 'use strict';
 
-const rest = require('rest');
-const defaultRequest = require('rest/interceptor/defaultRequest');
-const mime = require('rest/interceptor/mime');
-const baseRegistry = require('rest/mime/registry');
+import { wrap } from 'rest';
+import defaultRequest from 'rest/interceptor/defaultRequest';
+import mime from 'rest/interceptor/mime';
+import { child } from 'rest/mime/registry';
+import { hal } from 'rest/mime/type/application/hal';
 
-const registry = baseRegistry.child();
+const registry = child();
 
-registry.register('application/hal+json', require('rest/mime/type/application/hal'));
+registry.register('application/hal+json', hal);
 
-module.exports = rest
-		.wrap(mime, { registry: registry })
-		.wrap(defaultRequest, { headers: { 'Accept': 'application/hal+json' }});
+export default wrap(mime, { registry: registry })
+	.wrap(defaultRequest, { headers: { 'Accept': 'application/hal+json' } });
