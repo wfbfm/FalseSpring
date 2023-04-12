@@ -1,39 +1,43 @@
 import * as React from "react";
 import * as ReactDOMClient from "react-dom/client";
-import { Box, ChakraProvider } from "@chakra-ui/react";
+import { Box, ChakraProvider, HStack } from "@chakra-ui/react";
 import Nav from "./navbar";
 import Grid from "./grid";
-import LocalDatePicker from "./datepicker";
 import SmallWithLogoLeft from "./footer";
-import LocationPicker from "./locationpicker";
+import ControlPanel from "./controlPanel";
+import { Spacer } from "@chakra-ui/layout";
 
 function App() {
 
-    const [localDate, setLocalDate] = React.useState(new Date());
-    const [selectedLocation, setSelectedLocation] = React.useState("");
+  const [latestLocationForecasts, setLatestLocationForecasts] = React.useState([]);
+  const [historicalLocationForecasts, setHistoricalLocationForecasts] = React.useState([]);
 
-    const handleLocationSelect = (location) => {
-        setSelectedLocation(location);
-      };
-    return (
+  const fetchForecasts = (latestForecasts, historicalForecasts) => {
+    setLatestLocationForecasts(latestForecasts);
+    setHistoricalLocationForecasts(historicalForecasts);
+  }
+
+  return (
     <>
-    <div>
-    <Nav />
-    </div>
-      <div>
-        <LocationPicker onSelect={handleLocationSelect} />
-      </div>
-    <div>
-    <LocalDatePicker localDate={localDate} setLocalDate={setLocalDate} />
-    </div>
-    <div>
-    <Grid />
-    </div>
-    <div>
-    <SmallWithLogoLeft />
-    </div>
+      <Nav />
+      <Box p='4'>
+      <Box py='4'>
+        <HStack>
+          <Box borderWidth='1px' borderRadius='lg' p='4' mx='Auto'>
+            <ControlPanel onFetchForecasts={fetchForecasts} />
+          </Box>
+          <Spacer></Spacer>
+        </HStack>
+      </Box>
+      <Box>
+        <Grid locationForecasts={latestLocationForecasts} />
+      </Box>
+      </Box>
+      <Box>
+        <SmallWithLogoLeft />
+      </Box>
     </>
-    );
+  );
 }
 
 const rootElement = document.getElementById("root");
