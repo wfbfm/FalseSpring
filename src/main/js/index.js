@@ -29,7 +29,7 @@ function App() {
         </HStack>
       </Box>
       <div>
-        <Grid />
+        <Grid locationForecasts={latestLocationForecasts}/>
       </div>
       <div>
         <SmallWithLogoLeft />
