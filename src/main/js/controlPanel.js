@@ -44,7 +44,7 @@ const ControlPanel = ({ onFetchForecasts }) => {
                 <HStack spacing='24px'>
                     <Box><Text fontSize='2xl' as='b'>Forecast Parameters</Text></Box>
                     <Box><LocationPicker onSelect={handleLocationSelect} /></Box>
-                    <Box borderWidth='1px' borderRadius='lg'>
+                    <Box borderWidth='1px' borderRadius='lg' p='2' mx='Auto'>
                         <DatePicker selected={selectedDate} onChange={date => setSelectedDate(date)} dateFormat="yyyy-MM-dd" />
                     </Box>
                     <Box><Button colorScheme='green' variant='solid' onClick={fetchForecasts}>

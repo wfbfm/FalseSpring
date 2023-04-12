@@ -20,20 +20,22 @@ function App() {
   return (
     <>
       <Nav />
+      <Box p='4'>
       <Box py='4'>
         <HStack>
           <Box borderWidth='1px' borderRadius='lg' p='4' mx='Auto'>
-            <ControlPanel onFetchForecasts={fetchForecasts}/>
+            <ControlPanel onFetchForecasts={fetchForecasts} />
           </Box>
           <Spacer></Spacer>
         </HStack>
       </Box>
-      <div>
-        <Grid locationForecasts={latestLocationForecasts}/>
-      </div>
-      <div>
+      <Box>
+        <Grid locationForecasts={latestLocationForecasts} />
+      </Box>
+      </Box>
+      <Box>
         <SmallWithLogoLeft />
-      </div>
+      </Box>
     </>
   );
 }
