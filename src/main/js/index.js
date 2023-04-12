@@ -1,21 +1,25 @@
 import * as React from "react";
 import * as ReactDOMClient from "react-dom/client";
-import { Box, ChakraProvider } from "@chakra-ui/react";
+import { Box, ChakraProvider, HStack } from "@chakra-ui/react";
 import Nav from "./navbar";
 import Grid from "./grid";
 import SmallWithLogoLeft from "./footer";
 import ControlPanel from "./controlPanel";
+import { Spacer } from "@chakra-ui/layout";
 
 function App() {
 
   return (
     <>
-      <div>
-        <Nav />
-      </div>
-      <div>
+      <Nav />
+      <Box py='4'>
+     <HStack>
+      <Box borderWidth='1px' borderRadius='lg' p='4' mx='Auto'>
         <ControlPanel />
-      </div>
+      </Box>
+      <Spacer></Spacer>
+      </HStack>
+      </Box>
       <div>
         <Grid />
       </div>

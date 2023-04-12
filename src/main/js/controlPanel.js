@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {
     Box,
     Button,
-    useColorModeValue,
-    Stack
+    Text,
+    HStack
 } from '@chakra-ui/react';
 import LocationPicker from './locationpicker';
 import LocalDatePicker from './datepicker'
@@ -33,14 +33,15 @@ const ControlPanel = () => {
 
     return (
         <>
-            <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
-                <Stack direction={'row'} spacing={7}>
-                    <LocationPicker onSelect={handleLocationSelect} />
-                    <LocalDatePicker localDate={localDate} setLocalDate={handleDateSelect} />
-                    <Button colorScheme='green' variant='ghost' onClick={fetchForecasts}>
-                        Fetch Forecasts
-                    </Button>
-                </Stack>
+            <Box px={4}>
+                <HStack spacing='24px'>
+                    <Box><Text fontSize='2xl' as='b'>Forecast Parameters</Text></Box>
+                    <Box><LocationPicker onSelect={handleLocationSelect} /></Box>
+                    <Box borderWidth='1px' borderRadius='lg'><LocalDatePicker localDate={localDate} setLocalDate={handleDateSelect} /></Box>
+                    <Box><Button colorScheme='green' variant='solid' onClick={fetchForecasts}>
+                        Fetch
+                    </Button></Box>
+                </HStack>
             </Box>
         </>
     )
