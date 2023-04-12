@@ -9,31 +9,31 @@ import LocationPicker from "./locationpicker";
 
 function App() {
 
-    const [localDate, setLocalDate] = React.useState(new Date());
-    const [selectedLocation, setSelectedLocation] = React.useState("");
+  const [localDate, setLocalDate] = React.useState(new Date());
+  const [selectedLocation, setSelectedLocation] = React.useState("");
 
-    const handleLocationSelect = (location) => {
-        setSelectedLocation(location);
-      };
-    return (
+  const handleLocationSelect = (location) => {
+    setSelectedLocation(location);
+  };
+  return (
     <>
-    <div>
-    <Nav />
-    </div>
+      <div>
+        <Nav />
+      </div>
       <div>
         <LocationPicker onSelect={handleLocationSelect} />
       </div>
-    <div>
-    <LocalDatePicker localDate={localDate} setLocalDate={setLocalDate} />
-    </div>
-    <div>
-    <Grid />
-    </div>
-    <div>
-    <SmallWithLogoLeft />
-    </div>
+      <div>
+        <LocalDatePicker localDate={localDate} setLocalDate={setLocalDate} />
+      </div>
+      <div>
+        <Grid />
+      </div>
+      <div>
+        <SmallWithLogoLeft />
+      </div>
     </>
-    );
+  );
 }
 
 const rootElement = document.getElementById("root");

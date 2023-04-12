@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Select } from '@chakra-ui/react'
 import client from './client';
 
-const LocationPicker = ({onSelect}) => {
+const LocationPicker = ({ onSelect }) => {
   const [selectLocation, setSelectLocation] = useState("")
   const [locations, setLocations] = useState([])
 
@@ -13,8 +13,8 @@ const LocationPicker = ({onSelect}) => {
   };
 
   useEffect(() => {
-    client({method: 'GET', path: '/api/locations'})
-      .then(response => {setLocations(response.entity._embedded.locations)});
+    client({ method: 'GET', path: '/api/locations' })
+      .then(response => { setLocations(response.entity._embedded.locations) });
   }, [])
 
   return (

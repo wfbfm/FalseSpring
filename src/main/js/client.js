@@ -10,5 +10,5 @@ const registry = baseRegistry.child();
 registry.register('application/hal+json', require('rest/mime/type/application/hal'));
 
 module.exports = rest
-		.wrap(mime, { registry: registry })
-		.wrap(defaultRequest, { headers: { 'Accept': 'application/hal+json' }});
+	.wrap(mime, { registry: registry })
+	.wrap(defaultRequest, { headers: { 'Accept': 'application/hal+json' } });

@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 function LocalDatePicker({ localDate, setLocalDate }) {
   return (
-    <DatePicker selected={localDate} onChange={date => setLocalDate(date)} dateFormat="yyyy-MM-dd" showIcon/>
+    <DatePicker selected={localDate} onChange={date => setLocalDate(date)} dateFormat="yyyy-MM-dd" showIcon />
   );
 }
 
