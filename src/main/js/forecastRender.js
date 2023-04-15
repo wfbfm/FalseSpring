@@ -62,24 +62,35 @@ const ForecastRender = ({ locationForecasts }) => {
           <Stack direction='column' align='center' justify={'center'} justifyItems={'center'}
             alignContent={'center'}>
             {/* <Stack direction='column'> */}
-            <Icon as={TbClockHour10}></Icon>
-            <Icon as={GiBinoculars}></Icon>
-            <Icon as={BsThermometerHalf}></Icon>
-            <Icon as={IoWaterSharp} style={{ transform: 'rotate(330deg)' }}></Icon>
-            <Icon as={GiWindsock}></Icon>
+            <Box>
+              <Icon as={TbClockHour10}></Icon>
+            </Box>
+            <Box>
+              <Icon as={GiBinoculars}></Icon>
+            </Box>
+            <Box>
+              <Icon as={BsThermometerHalf}></Icon>
+            </Box>
+            <Box>
+              <Icon as={IoWaterSharp} style={{ transform: 'rotate(330deg)' }}></Icon>
+            </Box>
+            <Box>
+              <Icon as={GiWindsock}></Icon>
+            </Box>
           </Stack>
           <Stack direction='column' align='center' justify={'center'} justifyItems={'center'}
             alignContent={'center'}>
             {/* <Stack direction='column'> */}
             <Box bg='cyan'>{forecast1.timeslot}</Box>
-            <Icon as={BsCloudFill}></Icon>
+            <Box>
+              <Icon as={BsCloudFill}></Icon>
+            </Box>
             <Box>{forecast1.forecast.temperatureC}°C</Box>
             <Box>{forecast1.forecast.precipitationProbabilityInPercent}%</Box>
-            <Stack direction='row' align='center' justify={'center'} justifyItems={'center'}
-              alignContent={'center'}>
-              <Icon as={HiArrowNarrowUp} style={{ transform: 'rotate(330deg)' }}></Icon>
-              <Box>{forecast1.forecast.gustSpeedKph} kph</Box>
-            </Stack>
+            <Box bg='green'>
+              <Icon as={HiArrowNarrowUp} style={{ transform: 'rotate(0deg)' }}></Icon>
+              {forecast3.forecast.gustSpeedKph}
+            </Box>
           </Stack>
           <Stack direction='column' align='center' justify={'center'} justifyItems={'center'}
             alignContent={'center'}>
@@ -88,24 +99,21 @@ const ForecastRender = ({ locationForecasts }) => {
             <Icon as={BsCloudFill}></Icon>
             <Box>{forecast2.forecast.temperatureC}°C</Box>
             <Box>{forecast2.forecast.precipitationProbabilityInPercent}%</Box>
-            <Stack direction='row' align='center' justify={'center'} justifyItems={'center'}
-              alignContent={'center'}>
+            <Box bg='green'>
               <Icon as={HiArrowNarrowUp} style={{ transform: 'rotate(330deg)' }}></Icon>
-              <Box>{forecast2.forecast.gustSpeedKph} kph</Box>
-            </Stack>
+              {forecast3.forecast.gustSpeedKph}
+            </Box>
           </Stack>
           <Stack direction='column' align='center' justify={'center'} justifyItems={'center'}
             alignContent={'center'}>
-            {/* <Stack direction='column'> */}
             <Box bg='cyan'>{forecast3.timeslot}</Box>
             <Icon as={BsCloudFill}></Icon>
             <Box>{forecast3.forecast.temperatureC}°C</Box>
             <Box>{forecast3.forecast.precipitationProbabilityInPercent}%</Box>
-            <Stack direction='row' align='center' justify={'center'} justifyItems={'center'}
-              alignContent={'center'}>
+            <Box bg='green'>
               <Icon as={HiArrowNarrowUp} style={{ transform: 'rotate(330deg)' }}></Icon>
-              <Box>{forecast3.forecast.gustSpeedKph}</Box>
-            </Stack>
+              {forecast3.forecast.gustSpeedKph}
+            </Box>
           </Stack>
         </Stack>
       </Box>
