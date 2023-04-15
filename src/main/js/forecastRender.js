@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Text, CircularProgress, CircularProgressLabel, Icon } from '@chakra-ui/react'
+import { Box, Stack, Text, CircularProgress, CircularProgressLabel, Icon } from '@chakra-ui/react'
 import { testLocationForecasts } from './data';
 import { TbClockHour10 } from 'react-icons/tb';
 import { IoWaterSharp } from 'react-icons/io5';
-import { GiWindsock } from 'react-icons/gi';
-import { BsThermometerHalf } from 'react-icons/bs';
+import { GiWindsock, GiBinoculars } from 'react-icons/gi';
+import { BsThermometerHalf, BsCloudFill, BsFillCloudSunFill, BsSun } from 'react-icons/bs';
 import { HiArrowNarrowUp } from 'react-icons/hi';
 
 
@@ -45,23 +45,76 @@ const ForecastRender = ({ locationForecasts }) => {
 
   const data = convertForecastData(testLocationForecasts);
 
-  const forecast = data[24];
-  console.log(forecast);
-
+  const forecast1 = data[20];
+  const forecast2 = data[21];
+  const forecast3 = data[22];
 
   return (
-    <Box>
-      <TbClockHour10></TbClockHour10>
-      <Icon as={IoWaterSharp} style={{ transform: 'rotate(330deg)' }}></Icon>
-      <Icon as={HiArrowNarrowUp} style={{ transform: 'rotate(330deg)' }}></Icon>
-      <Icon as={BsThermometerHalf}></Icon>
-      <Icon as={GiWindsock}></Icon>
-      <Text>{forecast.timeslot}</Text>
-      <Text>{forecast.forecast.temperatureC}°C</Text>
-      <CircularProgress value={forecast.forecast.precipitationProbabilityInPercent}>
-        <CircularProgressLabel>{forecast.forecast.precipitationProbabilityInPercent}%</CircularProgressLabel>
-        </CircularProgress>
-    </Box>
+    <>
+      <Box bg='tomato'>
+        <Text>
+          Hi
+        </Text>
+      </Box>
+      <Box>
+        <Stack direction='row' align='center' justify={'center'} justifyItems={'center'}
+          alignContent={'center'}>
+          <Stack direction='column' align='center' justify={'center'} justifyItems={'center'}
+            alignContent={'center'}>
+            {/* <Stack direction='column'> */}
+            <Icon as={TbClockHour10}></Icon>
+            <Icon as={GiBinoculars}></Icon>
+            <Icon as={BsThermometerHalf}></Icon>
+            <Icon as={IoWaterSharp} style={{ transform: 'rotate(330deg)' }}></Icon>
+            <Icon as={GiWindsock}></Icon>
+          </Stack>
+          <Stack direction='column' align='center' justify={'center'} justifyItems={'center'}
+            alignContent={'center'}>
+            {/* <Stack direction='column'> */}
+            <Box bg='cyan'>{forecast1.timeslot}</Box>
+            <Icon as={BsCloudFill}></Icon>
+            <Box>{forecast1.forecast.temperatureC}°C</Box>
+            <Box>{forecast1.forecast.precipitationProbabilityInPercent}%</Box>
+            <Stack direction='row' align='center' justify={'center'} justifyItems={'center'}
+              alignContent={'center'}>
+              <Icon as={HiArrowNarrowUp} style={{ transform: 'rotate(330deg)' }}></Icon>
+              <Box>{forecast1.forecast.gustSpeedKph} kph</Box>
+            </Stack>
+          </Stack>
+          <Stack direction='column' align='center' justify={'center'} justifyItems={'center'}
+            alignContent={'center'}>
+            {/* <Stack direction='column'> */}
+            <Box bg='cyan'>{forecast2.timeslot}</Box>
+            <Icon as={BsCloudFill}></Icon>
+            <Box>{forecast2.forecast.temperatureC}°C</Box>
+            <Box>{forecast2.forecast.precipitationProbabilityInPercent}%</Box>
+            <Stack direction='row' align='center' justify={'center'} justifyItems={'center'}
+              alignContent={'center'}>
+              <Icon as={HiArrowNarrowUp} style={{ transform: 'rotate(330deg)' }}></Icon>
+              <Box>{forecast2.forecast.gustSpeedKph} kph</Box>
+            </Stack>
+          </Stack>
+          <Stack direction='column' align='center' justify={'center'} justifyItems={'center'}
+            alignContent={'center'}>
+            {/* <Stack direction='column'> */}
+            <Box bg='cyan'>{forecast3.timeslot}</Box>
+            <Icon as={BsCloudFill}></Icon>
+            <Box>{forecast3.forecast.temperatureC}°C</Box>
+            <Box>{forecast3.forecast.precipitationProbabilityInPercent}%</Box>
+            <Stack direction='row' align='center' justify={'center'} justifyItems={'center'}
+              alignContent={'center'}>
+              <Icon as={HiArrowNarrowUp} style={{ transform: 'rotate(330deg)' }}></Icon>
+              <Box>{forecast3.forecast.gustSpeedKph}</Box>
+            </Stack>
+          </Stack>
+        </Stack>
+      </Box>
+      <Box bg='blue'>
+        <Text>
+          Hi
+        </Text>
+      </Box>
+    </>
   )
 }
 export default ForecastRender;
