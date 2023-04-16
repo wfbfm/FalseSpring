@@ -39,28 +39,35 @@ function convertForecastData(locationForecasts) {
   return convertedData;
 }
 
-function testFunc()
-{
+function convertData(data) {
+  const groupedData = data.reduce((acc, curr) => {
+    const index = acc.findIndex(item => item.accessedDate === curr.accessedDate);
+    if (index === -1) {
+      acc.push({ accessedDate: curr.accessedDate, data: [{ timeslot: curr.timeslot, forecast: curr.forecast }] });
+    } else {
+      acc[index].data.push({ timeslot: curr.timeslot, forecast: curr.forecast });
+    }
+    return acc;
+  }, []);
+  return groupedData;
+}
+
+function renderHourlyForecast(hourlyForecast) {
   return (
-          <Stack direction='column' align='center' justify={'center'} justifyItems={'center'}
-            alignContent={'center'}>
-            {/* <Stack direction='column'> */}
-            <Box>
-              <Icon as={TbClockHour10}></Icon>
-            </Box>
-            <Box>
-              <Icon as={GiBinoculars}></Icon>
-            </Box>
-            <Box>
-              <Icon as={BsThermometerHalf}></Icon>
-            </Box>
-            <Box>
-              <Icon as={IoWaterSharp} style={{ transform: 'rotate(330deg)' }}></Icon>
-            </Box>
-            <Box>
-              <Icon as={GiWindsock}></Icon>
-            </Box>
-          </Stack>
+    <Stack key={hourlyForecast.timeslot} direction='column' align='center' justify='center' alignContent='center' alignItems='center'>
+      <Text as='i' fontSize='xs'>{hourlyForecast.timeslot}</Text>
+      <Box>
+        <Icon as={BsCloudFill}></Icon>
+      </Box>
+      <Text display='flex' alignItems='center' as='b'>{hourlyForecast.forecast.temperatureC}°</Text>
+      <Box>{hourlyForecast.forecast.precipitationProbabilityInPercent}%</Box>
+      <Box display='flex' alignContent='center' justifyContent='center'>
+        <HStack spacing={0} justifyContent='center'>
+          <Icon as={HiArrowNarrowUp} style={{ transform: 'rotate(0deg)' }}></Icon>
+          <Text fontSize='xs'>{hourlyForecast.forecast.gustSpeedKph}</Text>
+        </HStack>
+      </Box>
+    </Stack>
   )
 }
 
@@ -68,9 +75,10 @@ const ForecastRender = ({ locationForecasts }) => {
 
   const data = convertForecastData(testLocationForecasts);
 
-  const forecast1 = data[20];
-  const forecast2 = data[21];
-  const forecast3 = data[22];
+  const groupedAllDaysData = convertData(data);
+  const firstDayData = groupedAllDaysData[0];
+
+  console.log(firstDayData.data[0]);
 
   return (
     <>
@@ -84,61 +92,23 @@ const ForecastRender = ({ locationForecasts }) => {
           alignContent={'center'}>
           <Stack direction='column' align={'center'} justify={'center'} justifyItems={'center'}
             alignContent={'center'} display={'flex'} verticalAlign={'center'}>
-            {/* <Stack direction='column'> */}
-            <Box bg='purple'>
+              <Box>
               <Icon as={TbClockHour10}></Icon>
             </Box>
-            <Box bg='purple'>
+              <Box>
               <Icon as={GiBinoculars}></Icon>
             </Box>
-            <Box bg='purple'>
+              <Box>
               <Icon as={BsThermometerHalf}></Icon>
             </Box>
-            <Box bg='purple'>
+              <Box>
               <Icon as={IoWaterSharp} style={{ transform: 'rotate(330deg)' }}></Icon>
             </Box>
-            <Box bg='purple'>
+              <Box>
               <Icon as={GiWindsock}></Icon>
             </Box>
           </Stack>
-          <Divider borderColor={'red'} orientation='vertical'/>
-          <Stack direction='column' align='center' justify={'center'} alignContent={'center'} alignItems={'center'}>
-            <Box bg='cyan'>{forecast1.timeslot}</Box>
-            <Box bg='cyan'>
-              <Icon as={BsCloudFill}></Icon>
-            </Box>
-            <Text bg='purple' display='flex' alignItems={'center'}>{forecast1.forecast.temperatureC}°C</Text>
-            <Box bg='cyan'>{forecast1.forecast.precipitationProbabilityInPercent}%</Box>
-            <Box bg='orange' display='flex' alignContent={'center'} justifyContent={'center'}>
-              <HStack spacing={0} justifyContent={'center'}>
-              <Icon as={HiArrowNarrowUp} style={{ transform: 'rotate(0deg)' }}></Icon>
-              <Text>{forecast1.forecast.gustSpeedKph}</Text>
-              </HStack>
-            </Box>
-          </Stack>
-          <Stack direction='column' align='center' justify={'center'} justifyItems={'center'}
-            alignContent={'center'}>
-            {/* <Stack direction='column'> */}
-            <Box bg='cyan'>{forecast2.timeslot}</Box>
-            <Icon as={BsCloudFill}></Icon>
-            <Box bg='cyan'>{forecast2.forecast.temperatureC}°C</Box>
-            <Box bg='cyan'>{forecast2.forecast.precipitationProbabilityInPercent}%</Box>
-            <Box bg='cyan'>
-              <Icon as={HiArrowNarrowUp} style={{ transform: 'rotate(330deg)' }}></Icon>
-              {forecast2.forecast.gustSpeedKph}
-            </Box>
-          </Stack>
-          <Stack direction='column' align='center' justify={'center'} justifyItems={'center'}
-            alignContent={'center'}>
-            <Box bg='cyan'>{forecast3.timeslot}</Box>
-            <Icon as={BsCloudFill}></Icon>
-            <Box>{forecast3.forecast.temperatureC}°C</Box>
-            <Box>{forecast3.forecast.precipitationProbabilityInPercent}%</Box>
-            <Box bg='green'>
-              <Icon as={HiArrowNarrowUp} style={{ transform: 'rotate(330deg)' }}></Icon>
-              {forecast3.forecast.gustSpeedKph}
-            </Box>
-          </Stack>
+          {firstDayData.data.map(hourlyForecast => renderHourlyForecast(hourlyForecast))}
         </Stack>
       </Box>
       <Box bg='blue'>
@@ -146,31 +116,6 @@ const ForecastRender = ({ locationForecasts }) => {
           Hi
         </Text>
       </Box>
-      <SimpleGrid columns={10} spacing={10}>
-        <Box bg='tomato' width='20px'>
-          {testFunc()}
-        </Box>
-        <Box bg='tomato'>
-          <Stack direction='column' align='center' justify={'center'} justifyItems={'center'}
-            alignContent={'center'}>
-            {/* <Stack direction='column'> */}
-            <Box bg='cyan'>{forecast1.timeslot}</Box>
-            <Box>
-              <Icon as={BsCloudFill}></Icon>
-            </Box>
-            <Box>{forecast1.forecast.temperatureC}°C</Box>
-            <Box>{forecast1.forecast.precipitationProbabilityInPercent}%</Box>
-            <Box bg='green'>
-              <Icon as={HiArrowNarrowUp} style={{ transform: 'rotate(0deg)' }}></Icon>
-              {forecast1.forecast.gustSpeedKph}
-            </Box>
-          </Stack>
-        </Box>
-        <Divider orientation='vertical' />
-        <Text bg='tomato' height='80px' alignItems={'center'} justifyContent={'center'}>Hello</Text>
-        <Box bg='tomato' height='80px'></Box>
-        <Box bg='tomato' height='80px'></Box>
-      </SimpleGrid>
     </>
   )
 }
