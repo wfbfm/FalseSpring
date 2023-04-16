@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Stack, Text, CircularProgress, CircularProgressLabel, Icon } from '@chakra-ui/react'
+import { Flex, AbsoluteCenter, Divider, Tooltip, SimpleGrid, Grid, GridItem, Box, Stack, Text, CircularProgress, CircularProgressLabel, Icon, HStack } from '@chakra-ui/react'
 import { testLocationForecasts } from './data';
 import { TbClockHour10 } from 'react-icons/tb';
 import { IoWaterSharp } from 'react-icons/io5';
@@ -39,26 +39,9 @@ function convertForecastData(locationForecasts) {
   return convertedData;
 }
 
-
-
-const ForecastRender = ({ locationForecasts }) => {
-
-  const data = convertForecastData(testLocationForecasts);
-
-  const forecast1 = data[20];
-  const forecast2 = data[21];
-  const forecast3 = data[22];
-
+function testFunc()
+{
   return (
-    <>
-      <Box bg='tomato'>
-        <Text>
-          Hi
-        </Text>
-      </Box>
-      <Box>
-        <Stack direction='row' align='center' justify={'center'} justifyItems={'center'}
-          alignContent={'center'}>
           <Stack direction='column' align='center' justify={'center'} justifyItems={'center'}
             alignContent={'center'}>
             {/* <Stack direction='column'> */}
@@ -78,18 +61,59 @@ const ForecastRender = ({ locationForecasts }) => {
               <Icon as={GiWindsock}></Icon>
             </Box>
           </Stack>
-          <Stack direction='column' align='center' justify={'center'} justifyItems={'center'}
-            alignContent={'center'}>
+  )
+}
+
+const ForecastRender = ({ locationForecasts }) => {
+
+  const data = convertForecastData(testLocationForecasts);
+
+  const forecast1 = data[20];
+  const forecast2 = data[21];
+  const forecast3 = data[22];
+
+  return (
+    <>
+      <Box bg='tomato'>
+        <Text>
+          Hi
+        </Text>
+      </Box>
+      <Box>
+        <Stack direction='row' align='center' justify={'start'} justifyItems={'start'}
+          alignContent={'center'}>
+          <Stack direction='column' align={'center'} justify={'center'} justifyItems={'center'}
+            alignContent={'center'} display={'flex'} verticalAlign={'center'}>
             {/* <Stack direction='column'> */}
+            <Box bg='purple'>
+              <Icon as={TbClockHour10}></Icon>
+            </Box>
+            <Box bg='purple'>
+              <Icon as={GiBinoculars}></Icon>
+            </Box>
+            <Box bg='purple'>
+              <Icon as={BsThermometerHalf}></Icon>
+            </Box>
+            <Box bg='purple'>
+              <Icon as={IoWaterSharp} style={{ transform: 'rotate(330deg)' }}></Icon>
+            </Box>
+            <Box bg='purple'>
+              <Icon as={GiWindsock}></Icon>
+            </Box>
+          </Stack>
+          <Divider borderColor={'red'} orientation='vertical'/>
+          <Stack direction='column' align='center' justify={'center'} alignContent={'center'} alignItems={'center'}>
             <Box bg='cyan'>{forecast1.timeslot}</Box>
-            <Box>
+            <Box bg='cyan'>
               <Icon as={BsCloudFill}></Icon>
             </Box>
-            <Box>{forecast1.forecast.temperatureC}°C</Box>
-            <Box>{forecast1.forecast.precipitationProbabilityInPercent}%</Box>
-            <Box bg='green'>
+            <Text bg='purple' display='flex' alignItems={'center'}>{forecast1.forecast.temperatureC}°C</Text>
+            <Box bg='cyan'>{forecast1.forecast.precipitationProbabilityInPercent}%</Box>
+            <Box bg='orange' display='flex' alignContent={'center'} justifyContent={'center'}>
+              <HStack spacing={0} justifyContent={'center'}>
               <Icon as={HiArrowNarrowUp} style={{ transform: 'rotate(0deg)' }}></Icon>
-              {forecast3.forecast.gustSpeedKph}
+              <Text>{forecast1.forecast.gustSpeedKph}</Text>
+              </HStack>
             </Box>
           </Stack>
           <Stack direction='column' align='center' justify={'center'} justifyItems={'center'}
@@ -97,11 +121,11 @@ const ForecastRender = ({ locationForecasts }) => {
             {/* <Stack direction='column'> */}
             <Box bg='cyan'>{forecast2.timeslot}</Box>
             <Icon as={BsCloudFill}></Icon>
-            <Box>{forecast2.forecast.temperatureC}°C</Box>
-            <Box>{forecast2.forecast.precipitationProbabilityInPercent}%</Box>
-            <Box bg='green'>
+            <Box bg='cyan'>{forecast2.forecast.temperatureC}°C</Box>
+            <Box bg='cyan'>{forecast2.forecast.precipitationProbabilityInPercent}%</Box>
+            <Box bg='cyan'>
               <Icon as={HiArrowNarrowUp} style={{ transform: 'rotate(330deg)' }}></Icon>
-              {forecast3.forecast.gustSpeedKph}
+              {forecast2.forecast.gustSpeedKph}
             </Box>
           </Stack>
           <Stack direction='column' align='center' justify={'center'} justifyItems={'center'}
@@ -122,6 +146,31 @@ const ForecastRender = ({ locationForecasts }) => {
           Hi
         </Text>
       </Box>
+      <SimpleGrid columns={10} spacing={10}>
+        <Box bg='tomato' width='20px'>
+          {testFunc()}
+        </Box>
+        <Box bg='tomato'>
+          <Stack direction='column' align='center' justify={'center'} justifyItems={'center'}
+            alignContent={'center'}>
+            {/* <Stack direction='column'> */}
+            <Box bg='cyan'>{forecast1.timeslot}</Box>
+            <Box>
+              <Icon as={BsCloudFill}></Icon>
+            </Box>
+            <Box>{forecast1.forecast.temperatureC}°C</Box>
+            <Box>{forecast1.forecast.precipitationProbabilityInPercent}%</Box>
+            <Box bg='green'>
+              <Icon as={HiArrowNarrowUp} style={{ transform: 'rotate(0deg)' }}></Icon>
+              {forecast1.forecast.gustSpeedKph}
+            </Box>
+          </Stack>
+        </Box>
+        <Divider orientation='vertical' />
+        <Text bg='tomato' height='80px' alignItems={'center'} justifyContent={'center'}>Hello</Text>
+        <Box bg='tomato' height='80px'></Box>
+        <Box bg='tomato' height='80px'></Box>
+      </SimpleGrid>
     </>
   )
 }
