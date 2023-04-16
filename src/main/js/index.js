@@ -6,6 +6,7 @@ import Grid from "./grid";
 import SmallWithLogoLeft from "./footer";
 import ControlPanel from "./controlPanel";
 import { Spacer } from "@chakra-ui/layout";
+import ForecastRender from "./forecastRender";
 
 function App() {
 
@@ -30,7 +31,7 @@ function App() {
         </HStack>
       </Box>
       <Box>
-        <Grid locationForecasts={latestLocationForecasts} />
+        <ForecastRender locationForecasts={latestLocationForecasts} />
       </Box>
       </Box>
       <Box>

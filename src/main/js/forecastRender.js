@@ -193,47 +193,32 @@ function renderHourlyForecast(hourlyForecast) {
 }
 
 const ForecastRender = ({ locationForecasts }) => {
+  if (!locationForecasts || locationForecasts.length === 0)
+  {
+return (<></>);
+  }
 
-  const data = convertForecastData(testLocationForecasts);
-
+  const data = convertForecastData(locationForecasts);
   const groupedAllDaysData = convertData(data);
   const firstDayData = groupedAllDaysData[0];
+
+  if (!firstDayData)
+  {
+    return (<></>);
+  }
 
   return (
     <>
       <Box bg='tomato'>
         <Text>
-          Hi
+          Forecast for date {firstDayData.accessedDate}
         </Text>
       </Box>
       <Box>
         <Stack direction='row' align='center' justify={'start'} justifyItems={'start'}
           alignContent={'center'}>
-          <Stack direction='column' align={'center'} justify={'center'} justifyItems={'center'}
-            alignContent={'center'} display={'flex'} verticalAlign={'center'}>
-            <Box>
-              <Icon as={TbClockHour10}></Icon>
-            </Box>
-            <Box>
-              <Icon as={GiBinoculars}></Icon>
-            </Box>
-            <Box>
-              <Icon as={BsThermometerHalf}></Icon>
-            </Box>
-            <Box>
-              <Icon as={IoWaterSharp} style={{ transform: 'rotate(330deg)' }}></Icon>
-            </Box>
-            <Box>
-              <Icon as={GiWindsock}></Icon>
-            </Box>
-          </Stack>
           {firstDayData.data.map(hourlyForecast => renderHourlyForecast(hourlyForecast))}
         </Stack>
-      </Box>
-      <Box bg='blue'>
-        <Text>
-          Hi
-        </Text>
       </Box>
     </>
   )
