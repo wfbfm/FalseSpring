@@ -52,22 +52,83 @@ function convertData(data) {
   return groupedData;
 }
 
+function mapWeatherIcon(hourlyForecast) {
+  let icon;
+  switch (hourlyForecast.forecast.weatherTypeText) {
+    case 'Sunny':
+      icon = BsSun;
+      break;
+    default:
+      icon = BsCloudFill;
+  }
+  icon.key = `weatherIcon-${hourlyForecast.forecast.id}`
+  return icon;
+}
+
+function mapWindDirection(hourlyForecast) {
+  switch (hourlyForecast.forecast.windDirectionAbbreviation) {
+    case 'N':
+      return '0';
+    case 'NNE':
+      return '22.5';
+    case 'NE':
+      return '45';
+    case 'ENE':
+      return '67.5';
+    case 'E':
+      return '90';
+    case 'ESE':
+      return '112.5';
+    case 'SE':
+      return '135';
+    case 'SSE':
+      return '157.5';
+    case 'S':
+      return '180';
+    case 'SSW':
+      return '202.5';
+    case 'SW':
+      return '225';
+    case 'WSW':
+      return '247.5';
+    case 'W':
+      return '270';
+    case 'WNW':
+      return '292.5';
+    case 'NW':
+      return '315';
+    case 'NNW':
+      return '337.5';
+    default:
+      return '0';
+  }
+}
+
 function renderHourlyForecast(hourlyForecast) {
+  const windRotation = 'rotate(' + mapWindDirection(hourlyForecast) + 'deg)'
+  console.log(windRotation);
   return (
-    <Stack key={hourlyForecast.timeslot} direction='column' align='center' justify='center' alignContent='center' alignItems='center'>
-      <Text as='i' fontSize='xs'>{hourlyForecast.timeslot}</Text>
-      <Box>
-        <Icon as={BsCloudFill}></Icon>
-      </Box>
-      <Text display='flex' alignItems='center' as='b'>{hourlyForecast.forecast.temperatureC}°</Text>
-      <Box>{hourlyForecast.forecast.precipitationProbabilityInPercent}%</Box>
-      <Box display='flex' alignContent='center' justifyContent='center'>
-        <HStack spacing={0} justifyContent='center'>
-          <Icon as={HiArrowNarrowUp} style={{ transform: 'rotate(0deg)' }}></Icon>
-          <Text fontSize='xs'>{hourlyForecast.forecast.gustSpeedKph}</Text>
-        </HStack>
-      </Box>
-    </Stack>
+    <>
+      <Stack key={hourlyForecast.forecast.id} direction='column' align='center' justify='center' alignContent='center' alignItems='center'>
+        <Text as='i' fontSize='xs'>{hourlyForecast.timeslot}</Text>
+        <Box>
+          <Tooltip label={hourlyForecast.forecast.weatherTypeText} bg='red.600'>
+            <Icon as={mapWeatherIcon(hourlyForecast)}></Icon>
+          </Tooltip>
+        </Box>
+        <Text display='flex' alignItems='center' as='b'>{hourlyForecast.forecast.temperatureC}°</Text>
+        <Box>{hourlyForecast.forecast.precipitationProbabilityInPercent}%</Box>
+        <Box display='flex' alignContent='center' justifyContent='center'>
+          <HStack spacing={0} justifyContent='center'>
+            <Tooltip label={hourlyForecast.forecast.windDirectionAbbreviation} bg='red.600'>
+              <Icon as={HiArrowNarrowUp} style={{ transform: {windRotation}}}></Icon>
+            </Tooltip>
+            <Text fontSize='xs'>{hourlyForecast.forecast.gustSpeedKph}</Text>
+          </HStack>
+        </Box>
+      </Stack>
+      <Divider orientation='vertical' key={`divider-${hourlyForecast.forecast.id}`}></Divider>
+    </>
   )
 }
 
@@ -92,19 +153,19 @@ const ForecastRender = ({ locationForecasts }) => {
           alignContent={'center'}>
           <Stack direction='column' align={'center'} justify={'center'} justifyItems={'center'}
             alignContent={'center'} display={'flex'} verticalAlign={'center'}>
-              <Box>
+            <Box>
               <Icon as={TbClockHour10}></Icon>
             </Box>
-              <Box>
+            <Box>
               <Icon as={GiBinoculars}></Icon>
             </Box>
-              <Box>
+            <Box>
               <Icon as={BsThermometerHalf}></Icon>
             </Box>
-              <Box>
+            <Box>
               <Icon as={IoWaterSharp} style={{ transform: 'rotate(330deg)' }}></Icon>
             </Box>
-              <Box>
+            <Box>
               <Icon as={GiWindsock}></Icon>
             </Box>
           </Stack>
