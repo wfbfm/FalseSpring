@@ -52,7 +52,6 @@ function convertData(data) {
   }, []);
   return groupedData;
 }
-
 function mapWeatherIcon(hourlyForecast) {
   let icon;
   switch (hourlyForecast.forecast.weatherTypeText) {
@@ -192,35 +191,31 @@ function renderHourlyForecast(hourlyForecast) {
   )
 }
 
-const ForecastRender = ({ locationForecasts }) => {
-  if (!locationForecasts || locationForecasts.length === 0)
-  {
-return (<></>);
+const ForecastRender = ({ dailyForecast, i }) => {
+console.log("we have called forecastRender");
+console.log("dailyForecast", dailyForecast);
+console.log("i", i);
+
+  if (!dailyForecast || dailyForecast.length === 0) {
+    console.log("but the forecast is null :(")
+    console.log("dailyForecast", dailyForecast);
+    return (null);
   }
-
-  const data = convertForecastData(locationForecasts);
-  const groupedAllDaysData = convertData(data);
-  const firstDayData = groupedAllDaysData[0];
-
-  if (!firstDayData)
-  {
-    return (<></>);
-  }
-
+console.log("ForecastRender", dailyForecast);
   return (
-    <>
-      <Box bg='tomato'>
-        <Text>
-          Forecast for date {firstDayData.accessedDate}
+    <Box key={`box-container-${dailyForecast.data[0].forecast.id}`}>
+      <Box bg='tomato' key={`box-header-${dailyForecast.data[0].forecast.id}`}>
+        <Text key={`text-header-${dailyForecast.data[0].forecast.id}`}>
+          Forecast for date {dailyForecast.accessedDate}
         </Text>
       </Box>
-      <Box>
-        <Stack direction='row' align='center' justify={'start'} justifyItems={'start'}
+      <Box key={`container-box-${dailyForecast.data[0].forecast.id}`}>
+        <Stack key={`stack-weather-${dailyForecast.data[0].forecast.id}`} direction='row' align='center' justify={'start'} justifyItems={'start'}
           alignContent={'center'}>
-          {firstDayData.data.map(hourlyForecast => renderHourlyForecast(hourlyForecast))}
+          {dailyForecast.data.map(hourlyForecast => renderHourlyForecast(hourlyForecast))}
         </Stack>
       </Box>
-    </>
+    </Box>
   )
 }
 export default ForecastRender;
