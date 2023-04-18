@@ -61,9 +61,6 @@ function App() {
     setHistoricalLocationForecasts(convertData(convertForecastData(historicalForecasts)));
   }
 
-  if (latestLocationForecasts && historicalLocationForecasts && latestLocationForecasts.length > 0 && historicalLocationForecasts.length > 0) {
-    console.log(latestLocationForecasts);
-    console.log(historicalLocationForecasts);
   return (
     <>
       <Nav />
@@ -89,34 +86,6 @@ function App() {
     </>
   );
 }
-
-  else {
-  return (
-    <>
-      <Nav />
-      <Box p='4'>
-        <Box py='4'>
-          <HStack>
-            <Box borderWidth='1px' borderRadius='lg' p='4' mx='Auto'>
-              <ControlPanel onFetchForecasts={fetchForecasts} />
-            </Box>
-            <Spacer></Spacer>
-          </HStack>
-        </Box>
-        <Box>
-        </Box>
-        <Box>
-        </Box>
-      </Box>
-      <Box>
-        <SmallWithLogoLeft />
-      </Box>
-    </>
-  );
-}
-
-  }
-
 
 const rootElement = document.getElementById("root");
 const root = ReactDOMClient.createRoot(rootElement);

@@ -167,41 +167,39 @@ function mapWindDirection(hourlyForecast) {
 
 function renderHourlyForecast(hourlyForecast) {
   return (
-    <Box key={`outer-box-${hourlyForecast.forecast.id}`}>
-      <Stack key={hourlyForecast.forecast.id} direction='column' align='center' justify='center' alignContent='center' alignItems='center'>
+    <Box key={`outer-box-${hourlyForecast.forecast.id}`} borderWidth='1px' borderRadius='lg' p='4' mx='Auto'>
+      <Stack key={hourlyForecast.forecast.id} p='4' direction='column' align='center' justify='center' alignContent='center' alignItems='center'>
         <Text key={`timeslot-text-${hourlyForecast.forecast.id}`} as='i' fontSize='xs'>{hourlyForecast.timeslot}</Text>
         <Box>
-          <Tooltip label={hourlyForecast.forecast.weatherTypeText} bg='red.600'>
-            <Icon as={mapWeatherIcon(hourlyForecast)}></Icon>
+          <Tooltip label={hourlyForecast.forecast.weatherTypeText} bg='red.600' placement='auto-start'>
+            <span>
+              <Icon as={mapWeatherIcon(hourlyForecast)}></Icon>
+            </span>
           </Tooltip>
         </Box>
         <Text key={`temp-text-${hourlyForecast.forecast.id}`} display='flex' alignItems='center' as='b'>{hourlyForecast.forecast.temperatureC}°</Text>
         <Box key={`precipitation-text-${hourlyForecast.forecast.id}`}>{hourlyForecast.forecast.precipitationProbabilityInPercent}%</Box>
         <Box key={`wind-box-${hourlyForecast.forecast.id}`} display='flex' alignContent='center' justifyContent='center'>
           <HStack key={`wind-stack-${hourlyForecast.forecast.id}`} spacing={0} justifyContent='center'>
-            <Tooltip key={`wind-tooltip-${hourlyForecast.forecast.id}`} label={hourlyForecast.forecast.windDirectionAbbreviation} bg='red.600'>
-              <RotatedArrowIcon key={`wind-icon-${hourlyForecast.forecast.id}`} rotation={mapWindDirection(hourlyForecast)} />
+            <Tooltip key={`wind-tooltip-${hourlyForecast.forecast.id}`}
+              label={`${hourlyForecast.forecast.gustSpeedKph} kph ${hourlyForecast.forecast.windDirectionAbbreviation}`}
+              bg='red.600' placement='auto-start'>
+              <span>
+                <RotatedArrowIcon key={`wind-icon-${hourlyForecast.forecast.id}`} rotation={mapWindDirection(hourlyForecast)} />
+              </span>
             </Tooltip>
             <Text key={`wind-label-${hourlyForecast.forecast.id}`} fontSize='xs'>{hourlyForecast.forecast.gustSpeedKph}</Text>
           </HStack>
         </Box>
       </Stack>
-      <Divider orientation='vertical' key={`divider-${hourlyForecast.forecast.id}`}></Divider>
     </Box>
   )
 }
 
 const ForecastRender = ({ dailyForecast, i }) => {
-console.log("we have called forecastRender");
-console.log("dailyForecast", dailyForecast);
-console.log("i", i);
-
   if (!dailyForecast || dailyForecast.length === 0) {
-    console.log("but the forecast is null :(")
-    console.log("dailyForecast", dailyForecast);
     return (null);
   }
-console.log("ForecastRender", dailyForecast);
   return (
     <Box key={`box-container-${dailyForecast.data[0].forecast.id}`}>
       <Box bg='tomato' key={`box-header-${dailyForecast.data[0].forecast.id}`}>
