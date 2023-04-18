@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOMClient from "react-dom/client";
-import { Box, ChakraProvider, HStack } from "@chakra-ui/react";
+import { useColorModeValue, Flex, Box, ChakraProvider, HStack } from "@chakra-ui/react";
 import Nav from "./navbar";
 import Grid from "./grid";
 import SmallWithLogoLeft from "./footer";
@@ -73,7 +73,7 @@ function App() {
             <Spacer></Spacer>
           </HStack>
         </Box>
-        <Box>
+        <Box sx={{ position: '-webkit-sticky', /* Safari */ position: 'sticky', top: '0', }} bg={useColorModeValue('yellow.50', 'purple.500')} borderRadius='lg'>
           {latestLocationForecasts.map((dailyForecast, i) => <ForecastRender dailyForecast={dailyForecast} key={`latest-${i}`} />)}
         </Box>
         <Box>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Flex, AbsoluteCenter, Divider, Tooltip, SimpleGrid, Grid, GridItem, Box, Stack, Text, CircularProgress, CircularProgressLabel, Icon, HStack } from '@chakra-ui/react'
+import { useColorModeValue, Flex, AbsoluteCenter, Divider, Tooltip, SimpleGrid, Grid, GridItem, Box, Stack, Text, CircularProgress, CircularProgressLabel, Icon, HStack } from '@chakra-ui/react'
 import { testLocationForecasts } from './data';
 import { TbClockHour10 } from 'react-icons/tb';
 import { IoWaterSharp } from 'react-icons/io5';
@@ -168,22 +168,24 @@ function mapWindDirection(hourlyForecast) {
 function renderHourlyForecast(hourlyForecast) {
   return (
     <Box key={`outer-box-${hourlyForecast.forecast.id}`} borderWidth='1px' borderRadius='lg' p='4' mx='Auto'>
-      <Stack key={hourlyForecast.forecast.id} p='4' direction='column' align='center' justify='center' alignContent='center' alignItems='center'>
+      <Stack key={hourlyForecast.forecast.id} p='1' direction='column' align='center' justify='center' alignContent='center' alignItems='center'>
         <Text key={`timeslot-text-${hourlyForecast.forecast.id}`} as='i' fontSize='xs'>{hourlyForecast.timeslot}</Text>
         <Box>
-          <Tooltip label={hourlyForecast.forecast.weatherTypeText} bg='red.600' placement='auto-start'>
+          <Tooltip label={hourlyForecast.forecast.weatherTypeText} bg='blue.600' placement='auto-start'>
             <span>
               <Icon as={mapWeatherIcon(hourlyForecast)}></Icon>
             </span>
           </Tooltip>
         </Box>
-        <Text key={`temp-text-${hourlyForecast.forecast.id}`} display='flex' alignItems='center' as='b'>{hourlyForecast.forecast.temperatureC}°</Text>
-        <Box key={`precipitation-text-${hourlyForecast.forecast.id}`}>{hourlyForecast.forecast.precipitationProbabilityInPercent}%</Box>
+        <Tooltip label={`${hourlyForecast.forecast.temperatureC}°C`} bg='blue.600' placement='auto-start'>
+          <Text key={`temp-text-${hourlyForecast.forecast.id}`} display='flex' alignItems='center' as='b'>{hourlyForecast.forecast.temperatureC}°</Text>
+        </Tooltip>
+        <Text key={`precipitation-text-${hourlyForecast.forecast.id}`} color={useColorModeValue('blue.500', 'blue.200')} fontSize='xs'>{hourlyForecast.forecast.precipitationProbabilityInPercent}%</Text>
         <Box key={`wind-box-${hourlyForecast.forecast.id}`} display='flex' alignContent='center' justifyContent='center'>
           <HStack key={`wind-stack-${hourlyForecast.forecast.id}`} spacing={0} justifyContent='center'>
             <Tooltip key={`wind-tooltip-${hourlyForecast.forecast.id}`}
               label={`${hourlyForecast.forecast.gustSpeedKph} kph ${hourlyForecast.forecast.windDirectionAbbreviation}`}
-              bg='red.600' placement='auto-start'>
+              bg='blue.600' placement='auto-start'>
               <span>
                 <RotatedArrowIcon key={`wind-icon-${hourlyForecast.forecast.id}`} rotation={mapWindDirection(hourlyForecast)} />
               </span>
@@ -202,16 +204,16 @@ const ForecastRender = ({ dailyForecast, i }) => {
   }
   return (
     <Box key={`box-container-${dailyForecast.data[0].forecast.id}`}>
-      <Box bg='tomato' key={`box-header-${dailyForecast.data[0].forecast.id}`}>
-        <Text key={`text-header-${dailyForecast.data[0].forecast.id}`}>
-          Forecast for date {dailyForecast.accessedDate}
+      <Box bg={useColorModeValue('blue.700', 'gray.900')} key={`box-header-${dailyForecast.data[0].forecast.id}`} borderWidth='1px' borderRadius='lg' px='4' py='1' mx='Auto'>
+        <Text as='b' key={`text-header-${dailyForecast.data[0].forecast.id}`} color='white'>
+          Forecast as of {dailyForecast.accessedDate}
         </Text>
       </Box>
       <Box key={`container-box-${dailyForecast.data[0].forecast.id}`}>
-        <Stack key={`stack-weather-${dailyForecast.data[0].forecast.id}`} direction='row' align='center' justify={'start'} justifyItems={'start'}
+        <Flex key={`stack-weather-${dailyForecast.data[0].forecast.id}`} p='4' align='center' justify={'start'} justifyItems={'start'}
           alignContent={'center'}>
           {dailyForecast.data.map(hourlyForecast => renderHourlyForecast(hourlyForecast))}
-        </Stack>
+        </Flex>
       </Box>
     </Box>
   )
