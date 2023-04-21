@@ -8,7 +8,9 @@ public enum LocationsToQuery
     ESKILSTUNA("2715953", "Eskilstuna", 59.3666, 16.5077),
     GORDES("3015661", "Gordes", 43.9124, 5.2009),
     LIMEHOUSE("2644497", "Limehouse", 51.5141, -0.0328),
-    EARLS_COURT("2650549", "Earls Court", 51.4916, -0.198);
+    EARLS_COURT("2650549", "Earls Court", 51.4916, -0.198),
+    WARSAW("756135", "Warsaw", 52.2298, 21.0118),
+    MONTCLAIR("5101334", "Montclair", 40.8259, -74.209);
 
     private final String id;
     private final String name;
