@@ -13,6 +13,7 @@ import com.wfbfm.falsespring.forecast.input.HourlyReport;
 import com.wfbfm.falsespring.forecast.input.LocationsToQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class DatabaseLoader implements CommandLineRunner
 {
     private final LocationForecastRepository locationForecastRespository;
     private final LocationRepository locationRepository;
-    private final boolean FETCH_DATA = false;
+    private final boolean FETCH_DATA_ON_BOOT = false;
 
     @Autowired
     public DatabaseLoader(LocationForecastRepository locationForecastRespository, LocationRepository locationRepository)
@@ -43,23 +44,28 @@ public class DatabaseLoader implements CommandLineRunner
                 locationRepository.save(new Location(locationsToQuery));
             }
         }
-        if (FETCH_DATA)
+        if (FETCH_DATA_ON_BOOT)
         {
-            for (LocationsToQuery queryLocation : LocationsToQuery.values())
+            fetchLocationForecasts();
+        }
+    }
+
+    private void fetchLocationForecasts() throws IOException
+    {
+        for (LocationsToQuery queryLocation : LocationsToQuery.values())
+        {
+            final Location location = locationRepository.findById(queryLocation.getId()).orElseThrow();
+
+            ForecastResponse forecastResponse = getForecastResponseForLocationId(queryLocation.getId());
+            List<Forecast> forecasts = forecastResponse.getForecasts();
+
+            for (Forecast forecast : forecasts)
             {
-                final Location location = locationRepository.findById(queryLocation.getId()).orElseThrow();
+                List<HourlyReport> hourlyReportList = forecast.getDailyReport().getHourlyReports();
 
-                ForecastResponse forecastResponse = getForecastResponseForLocationId(queryLocation.getId());
-                List<Forecast> forecasts = forecastResponse.getForecasts();
-
-                for (Forecast forecast : forecasts)
+                for (HourlyReport hourlyReport : hourlyReportList)
                 {
-                    List<HourlyReport> hourlyReportList = forecast.getDailyReport().getHourlyReports();
-
-                    for (HourlyReport hourlyReport : hourlyReportList)
-                    {
-                        locationForecastRespository.save(new LocationForecast(location, hourlyReport));
-                    }
+                    locationForecastRespository.save(new LocationForecast(location, hourlyReport));
                 }
             }
         }
@@ -75,5 +81,12 @@ public class DatabaseLoader implements CommandLineRunner
         String rawResponse = request.execute().parseAsString();
         Gson gson = new Gson();
         return gson.fromJson(rawResponse, ForecastResponse.class);
+    }
+
+
+    @Scheduled(cron = "0 0 21 * * *")
+    public void scheduleFixedDelayTask() throws IOException
+    {
+        fetchLocationForecasts();
     }
 }
